@@ -6,85 +6,85 @@ using UnityEngine.UI;
 
 namespace WordConnect
 {
-	public class WordBoardCell : UIMonoBehaviour
-	{
-		#region Enums
+    public class WordBoardCell : UIMonoBehaviour
+    {
+        #region Enums
 
-		public enum State
-		{
-			Blank,
-			Hint,
-			Found
-		}
+        public enum State
+        {
+            Blank,
+            Hint,
+            Found
+        }
 
-		#endregion
+        #endregion
 
-		#region Inspector Variables
+        #region Inspector Variables
 
-		public Text			letterText;
-		public Image		letterBackground;
-		public GameObject	coinObject;
-		public Color		normalTextColor	= Color.white;
-		public Color		foundTextColor	= Color.white;
+        public Text letterText;
+        public Image letterBackground;
+        public GameObject coinObject;
+        public Color normalTextColor = Color.white;
+        public Color foundTextColor = Color.white;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public int		Row				{ get; set; }
-		public int		Col				{ get; set; }
-		public bool 	HasCoin 		{ get; set; }
-		public State 	CurrentState	{ get; set; }
+        public int Row { get; set; }
+        public int Col { get; set; }
+        public bool HasCoin { get; set; }
+        public State CurrentState { get; set; }
 
-		public System.Action<int, int> OnCellClicked { get; set; }
+        public System.Action<int, int> OnCellClicked { get; set; }
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		/// <summary>
-		/// Invoked when the button for this cell is clicked
-		/// </summary>
-		public void OnClick()
-		{
-			if (OnCellClicked != null)
-			{
-				OnCellClicked(Row, Col);
-			}
-		}
+        /// <summary>
+        /// Invoked when the button for this cell is clicked
+        /// </summary>
+        public void OnClick()
+        {
+            if (OnCellClicked != null)
+            {
+                OnCellClicked(Row, Col);
+            }
+        }
 
-		/// <summary>
-		/// Updates the state of this cell
-		/// </summary>
-		public void SetState(State state)
-		{
-			CurrentState = state;
+        /// <summary>
+        /// Updates the state of this cell
+        /// </summary>
+        public void SetState(State state)
+        {
+            CurrentState = state;
 
-			// Only set the letter background it the letter is found
-			letterBackground.gameObject.SetActive(state == State.Found);
+            // Only set the letter background it the letter is found
+            letterBackground.gameObject.SetActive(state == State.Found);
 
-			// Set the color of the letter text
-			Color letterColor	= (state == State.Found) ? foundTextColor : normalTextColor;
-			letterColor.a		= (state != State.Blank) ? 1f : 0f;
+            // Set the color of the letter text
+            Color letterColor = (state == State.Found) ? foundTextColor : normalTextColor;
+            letterColor.a = (state != State.Blank) ? 1f : 0f;
 
-			letterText.color = letterColor;
+            letterText.color = letterColor;
 
-			// Hide the coin if the state is now found of hint
-			if (HasCoin && (state == State.Found || state == State.Hint))
-			{
-				coinObject.SetActive(false);
-			}
-		}
+            // Hide the coin if the state is now found of hint
+            if (HasCoin && (state == State.Found || state == State.Hint))
+            {
+                coinObject.SetActive(false);
+            }
+        }
 
-		private void SetupAndPlay(UIAnimation anim, AnimationCurve animationCurve, float startDelay)
-		{
-			anim.style				= UIAnimation.Style.Custom;
-			anim.animationCurve		= animationCurve;
-			anim.startDelay			= startDelay;
-			anim.startOnFirstFrame	= true;
-			anim.Play();
-		}
+        private void SetupAndPlay(UIAnimation anim, AnimationCurve animationCurve, float startDelay)
+        {
+            anim.style = UIAnimation.Style.Custom;
+            anim.animationCurve = animationCurve;
+            anim.startDelay = startDelay;
+            anim.startOnFirstFrame = true;
+            anim.Play();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
