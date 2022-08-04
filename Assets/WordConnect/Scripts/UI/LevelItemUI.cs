@@ -40,6 +40,20 @@ namespace WordConnect
 
 		#endregion
 
+		//public RectTransform viewRect;
+		//public Vector2 positionRect;
+
+		//[ContextMenu("Position To Rect")]
+		//public void PositionToRect()
+		//{
+		//	if (viewRect != null && positionRect != null)
+		//	{
+		//		viewRect.localPosition = positionRect;
+		//		viewRect.pivot = new Vector2(0.5f, 0.5f);
+		//		viewRect.anchoredPosition = positionRect;
+		//	}
+		//}
+
 		#region Public Methods
 
 		public void Setup(LevelData levelData, Color packColor)
@@ -71,8 +85,9 @@ namespace WordConnect
 			// Set the y position of the LevelPreviewText based on how many letters are in it
 			RectTransform	levelPreviewRectT	= levelPreview.transform as RectTransform;
 			float			yPos				= (levelPreviewSetting == null) ? defaultYPos :levelPreviewSetting.yPos;
-
-			levelPreviewRectT.anchoredPosition = new Vector2(levelPreviewRectT.anchoredPosition.x, yPos);
+			
+			levelPreviewRectT.pivot = new Vector2(0.5f, 0.5f);
+			//levelPreviewRectT.anchoredPosition = new Vector2(levelPreviewRectT.anchoredPosition.x, yPos);
 
 			// Set the color of all the graphics
 			for (int i = 0; i < coloredGraphics.Count; i++)
@@ -92,6 +107,8 @@ namespace WordConnect
 				// The animations change the scale so we need to make sure it's set back to one
 				transform.localScale = Vector3.one;
 			}
+
+			//PositionToRect();
 		}
 
 		#endregion
