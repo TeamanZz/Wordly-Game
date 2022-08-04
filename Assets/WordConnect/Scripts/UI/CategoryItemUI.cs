@@ -49,11 +49,11 @@ namespace WordConnect
 			// If it's locked disable the button
 			UIButton.interactable = !isCategoryLocked;
 
-			// Set the color of all the graphics
-			for (int i = 0; i < coloredGraphics.Count; i++)
-			{
-				coloredGraphics[i].color = packInfo.color;
-			}
+			//// Set the color of all the graphics
+			//for (int i = 0; i < coloredGraphics.Count; i++)
+			//{
+			//	coloredGraphics[i].color = packInfo.color;
+			//}
 		}
 
 		#endregion

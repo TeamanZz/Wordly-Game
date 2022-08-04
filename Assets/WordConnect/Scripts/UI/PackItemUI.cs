@@ -5,60 +5,64 @@ using UnityEngine.UI;
 
 namespace WordConnect
 {
-	public class PackItemUI : MonoBehaviour
-	{
-		#region Inspector Variables
+    public class PackItemUI : MonoBehaviour
+    {
+        #region Inspector Variables
 
-		[SerializeField] private Text			displayNameText			= null;
-		[SerializeField] private Transform		categoryListContainer	= null;
-		[SerializeField] private List<Graphic>	coloredGraphics			= null;
+        [SerializeField] private Text displayNameText = null;
+        [SerializeField] private Transform categoryListContainer = null;
+        [SerializeField] private List<Graphic> coloredGraphics = null;
 
-		#endregion
+        [Header("Other UI")]
+        [SerializeField] private Image backgroundImage;
+        #endregion
 
-		#region Member Variables
+        #region Member Variables
 
-		public System.Action<PackInfo, int> OnCategorySelected;
+        public System.Action<PackInfo, int> OnCategorySelected;
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public void Setup(PackInfo packInfo, ObjectPool categoryItemPool)
-		{
-			displayNameText.text = packInfo.packName;
+        public void Setup(PackInfo packInfo, ObjectPool categoryItemPool)
+        {
+            displayNameText.text = packInfo.packName;
+            backgroundImage = GetComponent<Image>();
+            backgroundImage.color = packInfo.color;
 
-			// Create a category item for each category in the pack
-			for (int i = 0; i < packInfo.categoryInfos.Count; i++)
-			{
-				CategoryInfo	categoryInfo	= packInfo.categoryInfos[i];
-				CategoryItemUI	categoryItemUI	= categoryItemPool.GetObject<CategoryItemUI>(categoryListContainer);
+            // Create a category item for each category in the pack
+            for (int i = 0; i < packInfo.categoryInfos.Count; i++)
+            {
+                CategoryInfo categoryInfo = packInfo.categoryInfos[i];
+                CategoryItemUI categoryItemUI = categoryItemPool.GetObject<CategoryItemUI>(categoryListContainer);
 
-				categoryItemUI.Setup(packInfo, categoryInfo);
+                categoryItemUI.Setup(packInfo, categoryInfo);
 
-				categoryItemUI.Index				= i;
-				categoryItemUI.Data					= packInfo;
-				categoryItemUI.OnListItemClicked	= OnCategoryListItemClicked;
-			}
+                categoryItemUI.Index = i;
+                categoryItemUI.Data = packInfo;
+                categoryItemUI.OnListItemClicked = OnCategoryListItemClicked;
+            }
 
-			// Set the color of all the graphics
-			for (int i = 0; i < coloredGraphics.Count; i++)
-			{
-				coloredGraphics[i].color = packInfo.color;
-			}
-		}
+            // Set the color of all the graphics
+            for (int i = 0; i < coloredGraphics.Count; i++)
+            {
+                coloredGraphics[i].color = packInfo.color;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		private void OnCategoryListItemClicked(int categoryIndex, object data)
-		{
-			if (OnCategorySelected != null)
-			{
-				OnCategorySelected(data as PackInfo, categoryIndex);
-			}
-		}
+        private void OnCategoryListItemClicked(int categoryIndex, object data)
+        {
+            if (OnCategorySelected != null)
+            {
+                OnCategorySelected(data as PackInfo, categoryIndex);
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }
