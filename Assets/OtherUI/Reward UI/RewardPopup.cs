@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using WordConnect;
+using UnityEngine.UI;
 
 public class RewardPopup : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class RewardPopup : MonoBehaviour
 
     [SerializeField] private float hideTime = 0.5f;
     [SerializeField] private float openTime = 0.5f;
+
+    [SerializeField] private CanvasGroup titleText;
 
     public void Awake()
     {
@@ -62,16 +65,19 @@ public class RewardPopup : MonoBehaviour
         {
             case 0:
                 firstPanel.blocksRaycasts = true;
+                titleText.alpha = 1;
                 StartCoroutine(OpenWindow(firstPanel));
                 break;
 
             case 1:
                 secondPanel.blocksRaycasts = true;
+                titleText.alpha = 0;
                 StartCoroutine(OpenWindow(secondPanel));
                 break;
 
             case 2:
                 thirdPanel.blocksRaycasts = true;
+                titleText.alpha = 1;
                 StartCoroutine(OpenWindow(thirdPanel));
                 break;
         }

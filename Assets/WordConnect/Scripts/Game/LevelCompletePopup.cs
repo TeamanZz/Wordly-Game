@@ -17,10 +17,11 @@ namespace WordConnect
         //[SerializeField] private Text extraWordsText = null;
        // [SerializeField] private RectTransform extraWordsCoinMarker = null;
         [SerializeField] private Text nextLevelButtonText = null;
-       // [SerializeField] private Text gamePointsText = null;
+        [SerializeField] private Text currentLevelTitleText = null;
+        // [SerializeField] private Text gamePointsText = null;
         //[SerializeField] private Slider categoryProgressSlider = null;
-       // [SerializeField] private Image categoryProgressBar = null;
-        
+        // [SerializeField] private Image categoryProgressBar = null;
+
         [Space]
         //[SerializeField] private RectTransform categoryCoinPrizeIcon = null;
 
@@ -61,6 +62,7 @@ namespace WordConnect
            // levelText.text = string.Format("LEVEL {0} COMPLETED", level.levelData.GameLevelNumber);
             //gamePointsText.text = currentGamePoints.ToString();
             nextLevelButtonText.text = isLastLevel ? "HOME" : string.Format("PLAY LEVEL {0}", level.levelData.GameLevelNumber + 1);
+            currentLevelTitleText.text = isLastLevel ? "HOME" : string.Format("LEVEL {0} COMPLETE", level.levelData.GameLevelNumber);
 
             //categoryCoinPrizeIcon.gameObject.SetActive(true);
             //extraWordsCoinMarker.gameObject.SetActive(true);
