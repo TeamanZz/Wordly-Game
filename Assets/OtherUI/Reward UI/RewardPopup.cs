@@ -74,10 +74,6 @@ public class RewardPopup : MonoBehaviour
                 thirdPanel.blocksRaycasts = true;
                 StartCoroutine(OpenWindow(thirdPanel));
                 break;
-
-            case 3:
-                levelCompletePopup.OnBackClicked();
-                break;
         }
     }
 
