@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 using BBG;
 
@@ -260,6 +261,7 @@ namespace WordConnect
             selectedLetterUIs.Add(letterUI);
 
             letterUI.letterText.color = selectedTextColor;
+            letterUI.selectedIndicator.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack).From(Vector3.zero);
             letterUI.selectedIndicator.gameObject.SetActive(true);
 
             UpdateLine();

@@ -9,39 +9,39 @@ using BBG.MobileTools;
 namespace BBG
 {
     public class MobileToolsManager : MonoBehaviour
-	{
-		[System.Serializable]
-		public class OnProductPurchasedEvent : UnityEngine.Events.UnityEvent { }
+    {
+        [System.Serializable]
+        public class OnProductPurchasedEvent : UnityEngine.Events.UnityEvent { }
 
-		[System.Serializable]
-		public class ProductPurchasedEvent
-		{
-			public ProductId productId;
-			public OnProductPurchasedEvent pruchasedEvent;
-		}
+        [System.Serializable]
+        public class ProductPurchasedEvent
+        {
+            public ProductId productId;
+            public OnProductPurchasedEvent pruchasedEvent;
+        }
 
-		#region Inspector Variables
+        #region Inspector Variables
 
-		[Header("General")]
-		public string privacyPolicyUrl;
+        [Header("General")]
+        public string appUrl;
 
-		[Header("Ads")]
+        [Header("Ads")]
 
-		public GameObject adsConsentPopup = null;
-		public GameObject adsLoadingIntercept = null;
+        public GameObject adsConsentPopup = null;
+        public GameObject adsLoadingIntercept = null;
 
-		[Header("IAP")]
+        [Header("IAP")]
 
-		public GameObject iapLoadingIntercept = null;
-		public List<ProductPurchasedEvent> productPurchasedEvents = null;
+        public GameObject iapLoadingIntercept = null;
+        public List<ProductPurchasedEvent> productPurchasedEvents = null;
 
-		#endregion
+        #endregion
 
-		#region Unity Methods
+        #region Unity Methods
 
-		private void Awake()
-		{
-			#if BBG_MT_ADS
+        private void Awake()
+        {
+#if BBG_MT_ADS
 			if (MobileAdsManager.Instance == null)
 			{
 				GameObject obj = new GameObject("MobileAdsManager", typeof(MobileAdsManager));
@@ -51,9 +51,9 @@ namespace BBG
 				mobileAdsManager.consentPopup = adsConsentPopup;
 				mobileAdsManager.loadingObj = adsLoadingIntercept;
 			}
-			#endif
-			
-			#if BBG_MT_IAP
+#endif
+
+#if BBG_MT_IAP
 			if (IAPManager.Instance == null)
 			{
 				GameObject obj = new GameObject("IAPManager", typeof(IAPManager));
@@ -64,37 +64,37 @@ namespace BBG
 
 				iapManager.OnProductPurchased += OnIapProductPurchased;
 			}
-			#endif
-		}
+#endif
+        }
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public void RemoveAds()
-		{
-			#if BBG_MT_ADS
+        public void RemoveAds()
+        {
+#if BBG_MT_ADS
 			MobileAdsManager.Instance.RemoveAds();
-			#endif
-		}
+#endif
+        }
 
-		public void SetConsentStatus(int consent)
-		{
-			#if BBG_MT_ADS
+        public void SetConsentStatus(int consent)
+        {
+#if BBG_MT_ADS
 			MobileAdsManager.Instance.SetConsentStatus(consent);
-			#endif
-		}
+#endif
+        }
 
-		public void OpenPrivacyPolicy()
-		{
-			Application.OpenURL(privacyPolicyUrl);
-		}
+        public void OpenPrivacyPolicy()
+        {
+            Application.OpenURL(appUrl);
+        }
 
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		#if BBG_MT_IAP
+#if BBG_MT_IAP
 
 		private void OnIapProductPurchased(string productId)
 		{
@@ -107,8 +107,8 @@ namespace BBG
 			}
 		}
 
-		#endif
+#endif
 
-		#endregion
-	}
+        #endregion
+    }
 }
