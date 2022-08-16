@@ -61,7 +61,7 @@ namespace BBG
         {
             if (isHandleMoving || isHandleAnimating)
             {
-                SetUI((handle.anchoredPosition.x + handleSlideArea.rect.width / 2f) / handleSlideArea.rect.width);
+                SetUI((-handle.anchoredPosition.x + handleSlideArea.rect.width / 2f) / handleSlideArea.rect.width);
             }
         }
 
@@ -102,7 +102,7 @@ namespace BBG
                 OnValueChanged(on);
             }
 
-            float handleX = on ? handleSlideArea.rect.width / 2f : -handleSlideArea.rect.width / 2f;
+            float handleX = on ? -handleSlideArea.rect.width / 2f : handleSlideArea.rect.width / 2f;
 
             if (animate && handleAnimSpeed > 0)
             {
@@ -161,8 +161,8 @@ namespace BBG
 
         private void SetUI(float t)
         {
-            handleColorGraphic.color = Color.Lerp(handleOnColor, handleOffColor, t);
-            backgroundImage.color = Color.Lerp(backgroundOnColor, backgroundOffColor, t);
+            handleColorGraphic.color = Color.Lerp(handleOffColor, handleOnColor, t);
+            backgroundImage.color = Color.Lerp(backgroundOffColor, backgroundOnColor, t);
         }
 
         #endregion
