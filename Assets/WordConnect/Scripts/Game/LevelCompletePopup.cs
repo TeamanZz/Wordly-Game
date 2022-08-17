@@ -15,7 +15,7 @@ namespace WordConnect
         //[SerializeField] private Text levelText = null;
         //[SerializeField] private Text categoryText = null;
         //[SerializeField] private Text extraWordsText = null;
-       // [SerializeField] private RectTransform extraWordsCoinMarker = null;
+        // [SerializeField] private RectTransform extraWordsCoinMarker = null;
         [SerializeField] private Text nextLevelButtonText = null;
         [SerializeField] private Text currentLevelTitleText = null;
         // [SerializeField] private Text gamePointsText = null;
@@ -59,7 +59,7 @@ namespace WordConnect
 
             backgroundImage.sprite = level.packInfo.background;
             //packNameText.text = level.packInfo.packName;
-           // levelText.text = string.Format("LEVEL {0} COMPLETED", level.levelData.GameLevelNumber);
+            // levelText.text = string.Format("LEVEL {0} COMPLETED", level.levelData.GameLevelNumber);
             //gamePointsText.text = currentGamePoints.ToString();
             nextLevelButtonText.text = isLastLevel ? "HOME" : string.Format("PLAY LEVEL {0}", level.levelData.GameLevelNumber + 1);
             currentLevelTitleText.text = isLastLevel ? "HOME" : string.Format("LEVEL {0} COMPLETE", level.levelData.GameLevelNumber);
@@ -84,7 +84,7 @@ namespace WordConnect
                 int totalLevelsInCategory = level.categoryInfo.LevelDatas.Count;
 
                 //categoryText.text = string.Format("{0} {1} / {2}", level.categoryInfo.displayName, categoryNumberComplete, totalLevelsInCategory);
-               // extraWordsText.text = string.Format("+ {0} Extra Words", extraWordsCoinsAwarded);
+                // extraWordsText.text = string.Format("+ {0} Extra Words", extraWordsCoinsAwarded);
 
                 float categoryProgressFromValue = Mathf.Lerp(0.095f, 1f, (float)(categoryNumberComplete - 1) / (float)totalLevelsInCategory);
                 float categoryProgressToValue = Mathf.Lerp(0.095f, 1f, (float)(categoryNumberComplete) / (float)totalLevelsInCategory);
@@ -223,7 +223,7 @@ namespace WordConnect
 
                 for (int i = 0; i < extraWordsCoinsAwarded; i++)
                 {
-                   // fromPositions.Add(extraWordsCoinMarker);
+                    // fromPositions.Add(extraWordsCoinMarker);
                 }
 
                 CoinController.Instance.AnimateCoins(extraWordsCoinsAmountFrom, extraWordsCoinsAmountTo, fromPositions);

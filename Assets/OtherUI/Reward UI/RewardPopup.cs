@@ -20,17 +20,14 @@ public class RewardPopup : MonoBehaviour
     [SerializeField] private float openTime = 0.5f;
 
     [SerializeField] private CanvasGroup titleText;
+    [SerializeField] private GameObject awardParticlesContainer;
 
-    public void Awake()
-    {
-        OnSetup();
-    }
 
     public void OnSetup()
     {
         firstPanel.alpha = 0;
         firstPanel.blocksRaycasts = false;
-        
+
         secondPanel.alpha = 0;
         secondPanel.blocksRaycasts = false;
 
@@ -47,6 +44,12 @@ public class RewardPopup : MonoBehaviour
     private IEnumerator HideWindow(CanvasGroup panelGroup)
     {
         panelGroup.DOFade(0, hideTime);
+
+        if (panelGroup == firstPanel)
+        {
+            awardParticlesContainer.SetActive(false);
+        }
+
         yield return new WaitForSeconds(hideTime);
 
         lastCanvasGroup.blocksRaycasts = false;
@@ -86,6 +89,12 @@ public class RewardPopup : MonoBehaviour
     private IEnumerator OpenWindow(CanvasGroup panelGroup)
     {
         panelGroup.DOFade(1, openTime);
+
+        if (panelGroup == firstPanel)
+        {
+            awardParticlesContainer.SetActive(true);
+        }
+
         yield return new WaitForSeconds(openTime);
         lastCanvasGroup = panelGroup;
         Debug.Log($"Open {lastCanvasGroup}");
