@@ -11,7 +11,6 @@ public class RewardPopup : MonoBehaviour
 
     [SerializeField] private CanvasGroup firstPanel;
     [SerializeField] private CanvasGroup secondPanel;
-    [SerializeField] private CanvasGroup thirdPanel;
 
     [SerializeField] private CanvasGroup lastCanvasGroup;
     private Coroutine currentCorutine;
@@ -30,9 +29,6 @@ public class RewardPopup : MonoBehaviour
 
         secondPanel.alpha = 0;
         secondPanel.blocksRaycasts = false;
-
-        thirdPanel.alpha = 0;
-        thirdPanel.blocksRaycasts = false;
     }
 
     [ContextMenu("Open First")]
@@ -74,14 +70,8 @@ public class RewardPopup : MonoBehaviour
 
             case 1:
                 secondPanel.blocksRaycasts = true;
-                titleText.alpha = 0;
-                StartCoroutine(OpenWindow(secondPanel));
-                break;
-
-            case 2:
-                thirdPanel.blocksRaycasts = true;
                 titleText.alpha = 1;
-                StartCoroutine(OpenWindow(thirdPanel));
+                StartCoroutine(OpenWindow(secondPanel));
                 break;
         }
     }
