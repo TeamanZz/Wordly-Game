@@ -21,6 +21,10 @@ public class RewardPopup : MonoBehaviour
     [SerializeField] private CanvasGroup titleText;
     [SerializeField] private GameObject awardParticlesContainer;
 
+    [SerializeField] private UIRibbonAnimation uiRibbonAnimation;
+    [SerializeField] private Text ribbonText;
+    [SerializeField] private List<string> ribbonTitles = new List<string>();
+
 
     public void OnSetup()
     {
@@ -83,6 +87,12 @@ public class RewardPopup : MonoBehaviour
         if (panelGroup == firstPanel)
         {
             awardParticlesContainer.SetActive(true);
+        }
+
+        if (panelGroup == secondPanel)
+        {
+            ribbonText.text = ribbonTitles[Random.Range(0, ribbonTitles.Count)];
+            uiRibbonAnimation.PlayRibbonAnimation();
         }
 
         yield return new WaitForSeconds(openTime);

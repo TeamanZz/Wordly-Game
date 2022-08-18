@@ -22,6 +22,7 @@ namespace WordConnect
         //[SerializeField] private Slider categoryProgressSlider = null;
         // [SerializeField] private Image categoryProgressBar = null;
 
+
         [Space]
         //[SerializeField] private RectTransform categoryCoinPrizeIcon = null;
 
