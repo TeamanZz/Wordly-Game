@@ -22,9 +22,10 @@ namespace WordConnect
         //[SerializeField] private Slider categoryProgressSlider = null;
         // [SerializeField] private Image categoryProgressBar = null;
 
+        private object[] lastInData;
 
         [Space]
-        //[SerializeField] private RectTransform categoryCoinPrizeIcon = null;
+        [SerializeField] private RectTransform categoryCoinPrizeIcon = null;
 
         #endregion
 
@@ -41,6 +42,7 @@ namespace WordConnect
 
         public override void OnShowing(object[] inData)
         {
+            lastInData = inData;
             base.OnShowing(inData);
 
             rewardPopup.OnSetup();
@@ -201,38 +203,47 @@ namespace WordConnect
             }
 
             // Animate the coins they get for completing a category
-            if (categoryCoinsAwarded > 0)
-            {
-                //List<RectTransform> fromPositions = new List<RectTransform>();
-
-                //for (int i = 0; i < categoryCoinsAwarded; i++)
-                //{
-                //    fromPositions.Add(categoryCoinPrizeIcon);
-                //}
-
-                //CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
-
-                //categoryCoinPrizeIcon.gameObject.SetActive(false);
-            }
+            // PlayCategoryCoinsAnimation();
 
             yield return new WaitForSeconds(betweenDelay * 2f);
 
             // Animate the coins they get for finding extra words
-            if (extraWordsCoinsAwarded > 0)
+            // if (extraWordsCoinsAwarded > 0)
+            // {
+            //     List<RectTransform> fromPositions = new List<RectTransform>();
+
+            //     for (int i = 0; i < extraWordsCoinsAwarded; i++)
+            //     {
+            //         // fromPositions.Add(extraWordsCoinMarker);
+            //     }
+
+            //     CoinController.Instance.AnimateCoins(extraWordsCoinsAmountFrom, extraWordsCoinsAmountTo, fromPositions);
+
+            //     //extraWordsCoinMarker.gameObject.SetActive(false);
+            // }
+
+            animationEnumerator = null;
+        }
+
+        public void PlayCategoryCoinsAnimation()
+        {
+            int categoryCoinsAwarded = (int)lastInData[4];
+            int categoryCoinsAmountFrom = (int)lastInData[5];
+            int categoryCoinsAmountTo = (int)lastInData[6];
+
+            if (categoryCoinsAwarded > 0)
             {
                 List<RectTransform> fromPositions = new List<RectTransform>();
 
-                for (int i = 0; i < extraWordsCoinsAwarded; i++)
+                for (int i = 0; i < categoryCoinsAwarded; i++)
                 {
-                    // fromPositions.Add(extraWordsCoinMarker);
+                    fromPositions.Add(categoryCoinPrizeIcon);
                 }
 
-                CoinController.Instance.AnimateCoins(extraWordsCoinsAmountFrom, extraWordsCoinsAmountTo, fromPositions);
+                CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
 
-                //extraWordsCoinMarker.gameObject.SetActive(false);
+                //categoryCoinPrizeIcon.gameObject.SetActive(false);
             }
-
-            animationEnumerator = null;
         }
 
         #endregion

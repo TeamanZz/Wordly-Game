@@ -88,7 +88,7 @@ public class RewardPopup : MonoBehaviour
 
         if (panelGroup == secondPanel)
         {
-
+            levelCompletePopup.PlayCategoryCoinsAnimation();
             uiRibbonAnimation.PlayRibbonAnimation();
         }
 
