@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace WordConnect
 {
@@ -13,7 +14,6 @@ namespace WordConnect
         [SerializeField] private Image backgroundImage = null;
         //[SerializeField] private Text packNameText = null;
         //[SerializeField] private Text levelText = null;
-        //[SerializeField] private Text categoryText = null;
         //[SerializeField] private Text extraWordsText = null;
         // [SerializeField] private RectTransform extraWordsCoinMarker = null;
         [SerializeField] private Text nextLevelButtonText = null;
@@ -25,7 +25,10 @@ namespace WordConnect
         private object[] lastInData;
 
         [Space]
+
+        [SerializeField] private GameObject categoryCoinGroup;
         [SerializeField] private RectTransform categoryCoinPrizeIcon = null;
+        [SerializeField] private Text categoryCoinsText = null;
 
         #endregion
 
@@ -40,6 +43,14 @@ namespace WordConnect
 
         #region Public Methods
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                PlayCoinsGroupJumpAnimation();
+            }
+        }
+
         public override void OnShowing(object[] inData)
         {
             lastInData = inData;
@@ -47,6 +58,8 @@ namespace WordConnect
 
             rewardPopup.OnSetup();
             rewardPopup.OpenWindow(0);
+            categoryCoinGroup.SetActive(false);
+
 
             ActiveLevel level = (ActiveLevel)inData[0];
             bool isLevelAlreadyComplete = (bool)inData[1];
@@ -239,11 +252,18 @@ namespace WordConnect
                 {
                     fromPositions.Add(categoryCoinPrizeIcon);
                 }
-
+                categoryCoinGroup.SetActive(true);
                 CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
+                categoryCoinsText.text = (categoryCoinsAmountTo - categoryCoinsAmountFrom).ToString() + " COINS";
 
-                //categoryCoinPrizeIcon.gameObject.SetActive(false);
+                PlayCoinsGroupJumpAnimation();
             }
+        }
+
+        private void PlayCoinsGroupJumpAnimation()
+        {
+            categoryCoinPrizeIcon.transform.DOScale(0, 1).From(1).SetEase(Ease.InBack);
+            categoryCoinsText.transform.DOScale(1, 1f).From(0).SetEase(Ease.OutBack);
         }
 
         #endregion
