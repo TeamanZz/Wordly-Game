@@ -68,7 +68,7 @@ namespace WordConnect
         public void OnPointerDown(PointerEventData eventData)
         {
             state = State.Selecting;
-
+            Debug.Log("is selecting");
             UpdateDrag(eventData.position);
         }
 
@@ -263,7 +263,7 @@ namespace WordConnect
             letterUI.letterText.color = selectedTextColor;
             letterUI.selectedIndicator.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack).From(Vector3.zero);
             letterUI.selectedIndicator.gameObject.SetActive(true);
-
+            TutorialController.Instance.DisableTutorialAnimation();
             UpdateLine();
 
             if (OnSelectedLettersUpdated != null)
@@ -354,7 +354,16 @@ namespace WordConnect
                 return;
             }
 
-            List<Vector2> letterPositions = PickRandomPositionsForLetters();
+            List<Vector2> letterPositions = new List<Vector2>();
+
+            if (GameController.Instance.currentLevelIndex != 0)
+            {
+                letterPositions = PickRandomPositionsForLetters();
+            }
+            else
+            {
+                letterPositions = GetLetterPositions(letterUIs.Count);
+            }
 
             if (animate)
             {

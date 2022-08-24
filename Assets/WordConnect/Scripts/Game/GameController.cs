@@ -30,6 +30,8 @@ namespace WordConnect
         [Space]
         [SerializeField][HideInInspector] private List<PackInfo> packInfos = null;
 
+        public int currentLevelIndex = -1;
+
         #endregion
 
         #region Member Variables
@@ -166,10 +168,8 @@ namespace WordConnect
                     {
                         continue;
                     }
-
                     int levelIndex = gameLevelNumber - categoryInfo.LevelDatas[0].GameLevelNumber;
-
-                    StartLevel(packInfo, categoryInfo, categoryInfo.LevelDatas[levelIndex]);
+                    StartLevel(packInfo, categoryInfo, categoryInfo.LevelDatas[levelIndex], levelIndex);
 
                     return;
                 }
@@ -183,15 +183,16 @@ namespace WordConnect
         {
             if (levelIndex < categoryInfo.LevelDatas.Count)
             {
-                StartLevel(packInfo, categoryInfo, categoryInfo.LevelDatas[levelIndex]);
+                StartLevel(packInfo, categoryInfo, categoryInfo.LevelDatas[levelIndex], levelIndex);
             }
         }
 
         /// <summary>
         /// Creates a new current active level and starts it
         /// </summary>
-        public void StartLevel(PackInfo packInfo, CategoryInfo categoryInfo, LevelData levelData)
+        public void StartLevel(PackInfo packInfo, CategoryInfo categoryInfo, LevelData levelData, int levelIndex)
         {
+            currentLevelIndex = levelIndex;
             ActiveLevel activeLevel = new ActiveLevel();
 
             activeLevel.packInfo = packInfo;
@@ -222,6 +223,9 @@ namespace WordConnect
 				}
 #endif
             }
+
+            TutorialController.Instance.OpenTutorial(levelIndex);
+
             ResetInARowVariable();
             StartLevel(activeLevel);
         }
