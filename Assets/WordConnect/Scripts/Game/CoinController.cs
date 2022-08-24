@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 using BBG;
 
@@ -121,6 +122,7 @@ namespace WordConnect
         private IEnumerator WaitThenSetCoinsText(int coinAmount, float waitTime)
         {
             yield return new WaitForSeconds(waitTime);
+            animateTo.transform.DOScale(1.15f, 0.2f).SetEase(Ease.OutBack).From(1).SetLoops(2, LoopType.Yoyo);
 
             SetCoinsText(coinAmount);
         }
