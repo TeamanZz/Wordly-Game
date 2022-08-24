@@ -240,24 +240,24 @@ namespace WordConnect
 
         public void PlayCategoryCoinsAnimation()
         {
-            int categoryCoinsAwarded = 50;
-            int categoryCoinsAmountFrom = 200;
-            int categoryCoinsAmountTo = 250;
+            int categoryCoinsAwarded = (int)lastInData[4];
+            int categoryCoinsAmountFrom = (int)lastInData[5];
+            int categoryCoinsAmountTo = (int)lastInData[6];
 
-            // if (categoryCoinsAwarded > 0)
-            // {
-            List<RectTransform> fromPositions = new List<RectTransform>();
-
-            for (int i = 0; i < 5; i++)
+            if (categoryCoinsAwarded > 0)
             {
-                fromPositions.Add(categoryCoinPrizeIcon);
-            }
-            categoryCoinGroup.SetActive(true);
-            CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
-            categoryCoinsText.text = (categoryCoinsAmountTo - categoryCoinsAmountFrom).ToString() + " COINS";
+                List<RectTransform> fromPositions = new List<RectTransform>();
 
-            PlayCoinsGroupJumpAnimation();
-            // }
+                for (int i = 0; i < categoryCoinsAwarded; i++)
+                {
+                    fromPositions.Add(categoryCoinPrizeIcon);
+                }
+                categoryCoinGroup.SetActive(true);
+                CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
+                categoryCoinsText.text = (categoryCoinsAmountTo - categoryCoinsAmountFrom).ToString() + " COINS";
+
+                PlayCoinsGroupJumpAnimation();
+            }
         }
 
         private void PlayCoinsGroupJumpAnimation()
