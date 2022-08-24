@@ -38,7 +38,7 @@ public class RewardPopup : MonoBehaviour
         OpenWindow(0);
     }
 
-    private IEnumerator HideWindow(CanvasGroup panelGroup)
+    private void HideWindow(CanvasGroup panelGroup)
     {
         panelGroup.DOFade(0, hideTime);
 
@@ -46,19 +46,15 @@ public class RewardPopup : MonoBehaviour
         {
             awardParticlesContainer.SetActive(false);
         }
-
-        yield return new WaitForSeconds(hideTime);
-
         lastCanvasGroup.blocksRaycasts = false;
         lastCanvasGroup = null;
-        Debug.Log($"Hide {lastCanvasGroup}");
     }
 
     public void OpenWindow(int windowNumber)
     {
         if (lastCanvasGroup != null)
         {
-            StartCoroutine(HideWindow(lastCanvasGroup));
+            HideWindow(lastCanvasGroup);
         }
 
         switch (windowNumber)
@@ -79,6 +75,7 @@ public class RewardPopup : MonoBehaviour
 
     private IEnumerator OpenWindow(CanvasGroup panelGroup)
     {
+        lastCanvasGroup = panelGroup;
         panelGroup.DOFade(1, openTime);
 
         if (panelGroup == firstPanel)
@@ -93,8 +90,6 @@ public class RewardPopup : MonoBehaviour
         }
 
         yield return new WaitForSeconds(openTime);
-        lastCanvasGroup = panelGroup;
-        Debug.Log($"Open {lastCanvasGroup}");
     }
 
 }
