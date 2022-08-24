@@ -79,7 +79,7 @@ namespace WordConnect
             coinToAnimate.anchoredPosition = coinRectTransform.anchoredPosition;
             coinToAnimate.SetParent(animateTo);
 
-            Vector2 animateToPosition = animateTo.localPosition;
+            Vector2 animateToPosition = animateTo.localPosition - new Vector3(animateTo.sizeDelta.x / 1.5f, 0, 0);
 
             // Aniamte the x position position of the coin
             PlayAnimation(UIAnimation.PositionX(coinToAnimate, animateToPosition.x, animationDuration), startDelay);
