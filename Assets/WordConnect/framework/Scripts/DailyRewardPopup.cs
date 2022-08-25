@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using BBG;
 using WordConnect;
+using System;
 
 public class DailyRewardPopup : Popup
 {
     public DailyRewardController dailyRewardController;
+    public Button colllectButton;
+    public TextMeshProUGUI coinsText;
     public TextMeshProUGUI commonText;
+    public GameObject coinParticle;
+    public GameObject dailyGiftButton;
     public CanvasGroup mainCoin;
     public RectTransform mainCoinRect;
     public List<GameObject> giftItems = new List<GameObject>();
@@ -24,9 +30,16 @@ public class DailyRewardPopup : Popup
         InitializeVariables();
     }
 
-    private void OnEnable()
+    public override void Hide(bool cancelled)
     {
-        Reset();
+        base.Hide(cancelled);
+        coinParticle.SetActive(false);
+    }
+
+    public override void Show()
+    {
+        base.Show();
+        coinParticle.SetActive(true);
     }
 
     private void Reset()
@@ -58,6 +71,8 @@ public class DailyRewardPopup : Popup
     {
         GameController.Instance.Coins += dailyRewardController.coinsAwarded;
         dailyRewardController.PlayDailyGiftCoinsAnimation();
+        colllectButton.enabled = false;
+        PlayerPrefs.SetString("Reward_Claim_Datetime", DateTime.Now.ToString());
         StartCoroutine(IEHidePopupAfterDelay());
     }
 
@@ -77,27 +92,34 @@ public class DailyRewardPopup : Popup
             //except selectedItem
             itemsCanvasGroups[i].DOFade(0, 0.5f);
         }
-        commonText.DOFade(0, 0.5f);
 
+        coinsText.text = dailyRewardController.coinsAwarded + " coins";
+
+        commonText.DOFade(0, 0.5f);
         itemsRects[itemIndex].DOAnchorPos(new Vector2(0, -55), 1);
         itemsRects[itemIndex].transform.DOScale(2f, 1f).SetEase(Ease.OutBack);
-
         var giftSequence = DOTween.Sequence();
         giftSequence.Insert(1, itemsCanvasGroups[itemIndex].DOFade(0, 0.5f));
 
-        StartCoroutine(IEPlayRewardAnimation());
+        StartCoroutine(IEPlayRewardAnimation(itemIndex));
     }
 
-    private IEnumerator IEPlayRewardAnimation()
+    private IEnumerator IEPlayRewardAnimation(int itemIndex)
     {
         yield return new WaitForSeconds(0.6f);
+        for (int i = 0; i < itemsCanvasGroups.Count; i++)
+        {
+            if (i != itemIndex)
+                giftItems[i].SetActive(false);
+        }
         animator.Play("Daily Reward", 0, 0);
     }
 
     private IEnumerator IEHidePopupAfterDelay()
     {
-        yield return new WaitForSeconds(CoinController.Instance.delayBetweenCoins * dailyRewardController.coinsAwarded);
+        yield return new WaitForSeconds(CoinController.Instance.delayBetweenCoins * 10);
+        dailyGiftButton.SetActive(false);
         Hide(true);
-
+        // Reset();
     }
 }

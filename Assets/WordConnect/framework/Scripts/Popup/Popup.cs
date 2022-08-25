@@ -4,179 +4,179 @@ using System.Collections.Generic;
 
 namespace BBG
 {
-	public class Popup : UIMonoBehaviour
-	{
-		#region Enums
+    public class Popup : UIMonoBehaviour
+    {
+        #region Enums
 
-		protected enum AnimType
-		{
-			Fade,
-			Zoom
-		}
+        protected enum AnimType
+        {
+            Fade,
+            Zoom
+        }
 
-		#endregion
+        #endregion
 
-		#region Inspector Variables
+        #region Inspector Variables
 
-		[SerializeField] protected bool				canAndroidBackClosePopup;
+        [SerializeField] protected bool canAndroidBackClosePopup;
 
-		[Header("Anim Settings")]
-		[SerializeField] protected float			animDuration;
-		[SerializeField] protected AnimType			animType;
-		[SerializeField] protected AnimationCurve	animCurve;
-		[SerializeField] protected RectTransform	animContainer;
+        [Header("Anim Settings")]
+        [SerializeField] protected float animDuration;
+        [SerializeField] protected AnimType animType;
+        [SerializeField] protected AnimationCurve animCurve;
+        [SerializeField] protected RectTransform animContainer;
 
-		#endregion
+        #endregion
 
-		#region Member Variables
+        #region Member Variables
 
-		private bool		isInitialized;
-		private bool		isShowing;
-		private PopupClosed	callback;
+        private bool isInitialized;
+        private bool isShowing;
+        private PopupClosed callback;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		public bool CanAndroidBackClosePopup { get { return canAndroidBackClosePopup; } }
+        public bool CanAndroidBackClosePopup { get { return canAndroidBackClosePopup; } }
 
-		#endregion
+        #endregion
 
-		#region Delegates
+        #region Delegates
 
-		public delegate void PopupClosed(bool cancelled, object[] outData);
+        public delegate void PopupClosed(bool cancelled, object[] outData);
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public virtual void Initialize()
-		{
+        public virtual void Initialize()
+        {
 
-		}
+        }
 
-		public void Show()
-		{
-			Show(null, null);
-		}
+        public virtual void Show()
+        {
+            Show(null, null);
+        }
 
-		public void Show(object[] inData, PopupClosed callback)
-		{
-			this.callback = callback;
+        public void Show(object[] inData, PopupClosed callback)
+        {
+            this.callback = callback;
 
-			if (isShowing)
-			{
-				return;
-			}
+            if (isShowing)
+            {
+                return;
+            }
 
-			isShowing = true;
+            isShowing = true;
 
-			// Show the popup object
-			gameObject.SetActive(true);
+            // Show the popup object
+            gameObject.SetActive(true);
 
-			switch (animType)
-			{
-				case AnimType.Fade:
-					DoFadeAnim();
-					break;
-				case AnimType.Zoom:
-					DoZoomAnim();
-					break;
-			}
+            switch (animType)
+            {
+                case AnimType.Fade:
+                    DoFadeAnim();
+                    break;
+                case AnimType.Zoom:
+                    DoZoomAnim();
+                    break;
+            }
 
-			OnShowing(inData);
-		}
+            OnShowing(inData);
+        }
 
-		public void Hide(bool cancelled)
-		{
-			Hide(cancelled, null);
-		}
+        public virtual void Hide(bool cancelled)
+        {
+            Hide(cancelled, null);
+        }
 
-		public void Hide(bool cancelled, object[] outData)
-		{
-			if (!isShowing)
-			{
-				return;
-			}
+        public void Hide(bool cancelled, object[] outData)
+        {
+            if (!isShowing)
+            {
+                return;
+            }
 
-			isShowing = false;
+            isShowing = false;
 
-			if (callback != null)
-			{
-				callback(cancelled, outData);
-			}
+            if (callback != null)
+            {
+                callback(cancelled, outData);
+            }
 
-			// Start the popup hide animations
-			UIAnimation anim = null;
+            // Start the popup hide animations
+            UIAnimation anim = null;
 
-			anim = UIAnimation.Alpha(gameObject, 1f, 0f, animDuration);
-			anim.style = UIAnimation.Style.EaseOut;
-			anim.startOnFirstFrame = true;
+            anim = UIAnimation.Alpha(gameObject, 1f, 0f, animDuration);
+            anim.style = UIAnimation.Style.EaseOut;
+            anim.startOnFirstFrame = true;
 
-			anim.OnAnimationFinished += (GameObject target) => 
-			{
-				gameObject.SetActive(false);
-			};
+            anim.OnAnimationFinished += (GameObject target) =>
+            {
+                gameObject.SetActive(false);
+            };
 
-			anim.Play();
+            anim.Play();
 
-			OnHiding();
-		}
+            OnHiding();
+        }
 
-		public void HideWithAction(string action)
-		{
-			Hide(false, new object[] { action });
-		}
+        public void HideWithAction(string action)
+        {
+            Hide(false, new object[] { action });
+        }
 
-		public virtual void OnShowing(object[] inData)
-		{
+        public virtual void OnShowing(object[] inData)
+        {
 
-		}
+        }
 
-		public virtual void OnHiding()
-		{
-			PopupManager.Instance.OnPopupHiding(this);
-		}
+        public virtual void OnHiding()
+        {
+            PopupManager.Instance.OnPopupHiding(this);
+        }
 
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		private void DoFadeAnim()
-		{
-			// Start the popup show animations
-			UIAnimation anim = null;
+        private void DoFadeAnim()
+        {
+            // Start the popup show animations
+            UIAnimation anim = null;
 
-			anim = UIAnimation.Alpha(gameObject, 0f, 1f, animDuration);
-			anim.startOnFirstFrame = true;
-			anim.OnAnimationFinished = null;
-			anim.Play();
-		}
+            anim = UIAnimation.Alpha(gameObject, 0f, 1f, animDuration);
+            anim.startOnFirstFrame = true;
+            anim.OnAnimationFinished = null;
+            anim.Play();
+        }
 
-		private void DoZoomAnim()
-		{
-			// Start the popup show animations
-			UIAnimation anim = null;
+        private void DoZoomAnim()
+        {
+            // Start the popup show animations
+            UIAnimation anim = null;
 
-			anim = UIAnimation.Alpha(gameObject, 0f, 1f, animDuration);
-			anim.style = UIAnimation.Style.EaseOut;
-			anim.startOnFirstFrame = true;
-			anim.OnAnimationFinished = null;
-			anim.Play();
+            anim = UIAnimation.Alpha(gameObject, 0f, 1f, animDuration);
+            anim.style = UIAnimation.Style.EaseOut;
+            anim.startOnFirstFrame = true;
+            anim.OnAnimationFinished = null;
+            anim.Play();
 
-			anim					= UIAnimation.ScaleX(animContainer, 0f, 1f, animDuration);
-			anim.style				= UIAnimation.Style.Custom;
-			anim.animationCurve		= animCurve;
-			anim.startOnFirstFrame	= true;
-			anim.Play();
+            anim = UIAnimation.ScaleX(animContainer, 0f, 1f, animDuration);
+            anim.style = UIAnimation.Style.Custom;
+            anim.animationCurve = animCurve;
+            anim.startOnFirstFrame = true;
+            anim.Play();
 
-			anim					= UIAnimation.ScaleY(animContainer, 0f, 1f, animDuration);
-			anim.style				= UIAnimation.Style.Custom;
-			anim.animationCurve		= animCurve;
-			anim.startOnFirstFrame	= true;
-			anim.Play();
-		}
+            anim = UIAnimation.ScaleY(animContainer, 0f, 1f, animDuration);
+            anim.style = UIAnimation.Style.Custom;
+            anim.animationCurve = animCurve;
+            anim.startOnFirstFrame = true;
+            anim.Play();
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

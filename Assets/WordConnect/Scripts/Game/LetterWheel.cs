@@ -68,7 +68,6 @@ namespace WordConnect
         public void OnPointerDown(PointerEventData eventData)
         {
             state = State.Selecting;
-            Debug.Log("is selecting");
             UpdateDrag(eventData.position);
         }
 
