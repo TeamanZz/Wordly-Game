@@ -3,28 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using BBG;
 
-public class DailyRewardPopup : MonoBehaviour
+public class DailyRewardPopup : Popup
 {
     public TextMeshProUGUI commonText;
     public CanvasGroup mainCoin;
     public RectTransform mainCoinRect;
+    public List<GameObject> giftItems = new List<GameObject>();
+    private List<RectTransform> itemsRects = new List<RectTransform>();
+    private List<CanvasGroup> itemsCanvasGroups = new List<CanvasGroup>();
+    private List<GiftItemUI> giftItemsComponents = new List<GiftItemUI>();
 
-    public Animator animator;
-    public List<RectTransform> itemsRects = new List<RectTransform>();
-    public List<CanvasGroup> itemsCanvasGroups = new List<CanvasGroup>();
+    private Animator animator;
 
     private void Awake()
     {
         mainCoinRect = mainCoin.GetComponent<RectTransform>();
         animator = GetComponent<Animator>();
+
+        for (int i = 0; i < giftItems.Count; i++)
+        {
+            itemsRects.Add(giftItems[i].GetComponent<RectTransform>());
+            itemsCanvasGroups.Add(giftItems[i].GetComponent<CanvasGroup>());
+            giftItemsComponents.Add(giftItems[i].GetComponent<GiftItemUI>());
+        }
     }
 
-    public void GetDailyReward(int itemIndex)
+    public void CollectCoins()
+    {
+
+    }
+
+    public void PlayRewardAnimation(int itemIndex)
     {
         for (int i = 0; i < itemsCanvasGroups.Count; i++)
         {
             itemsCanvasGroups[i].blocksRaycasts = false;
+            giftItemsComponents[i].KillAnimation();
 
             if (i == itemIndex)
                 continue;
@@ -46,6 +62,5 @@ public class DailyRewardPopup : MonoBehaviour
     {
         yield return new WaitForSeconds(0.6f);
         animator.Play("Daily Reward", 0, 0);
-
     }
 }
