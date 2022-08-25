@@ -69,11 +69,15 @@ public class DailyRewardPopup : Popup
             giftItemsComponents[i].KillAnimation();
 
             if (i == itemIndex)
+            {
+                giftItemsComponents[i].PlayOpenAnimation();
                 continue;
+            }
 
-            commonText.DOFade(0, 0.5f);
+            //except selectedItem
             itemsCanvasGroups[i].DOFade(0, 0.5f);
         }
+        commonText.DOFade(0, 0.5f);
 
         itemsRects[itemIndex].DOAnchorPos(new Vector2(0, -55), 1);
         itemsRects[itemIndex].transform.DOScale(2f, 1f).SetEase(Ease.OutBack);
