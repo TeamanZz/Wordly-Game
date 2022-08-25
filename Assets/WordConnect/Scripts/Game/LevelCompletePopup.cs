@@ -253,6 +253,7 @@ namespace WordConnect
                     fromPositions.Add(categoryCoinPrizeIcon);
                 }
                 categoryCoinGroup.SetActive(true);
+                GameController.Instance.Coins += categoryCoinsAwarded;
                 CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
                 categoryCoinsText.text = (categoryCoinsAmountTo - categoryCoinsAmountFrom).ToString() + " COINS";
 

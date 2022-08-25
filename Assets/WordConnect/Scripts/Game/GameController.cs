@@ -60,7 +60,7 @@ namespace WordConnect
         public int CoinCostPerMultiHint { get { return coinCostPerMultiHint; } }
         public ActiveLevel CurrentActiveLevel { get; private set; }
         public int GamePoints { get; private set; }
-        public int Coins { get; private set; }
+        public int Coins;
         public int NumLevelsTillAdShows { get; private set; }
         public bool PlayerSelectingHint { get; private set; }
         public int LastCompletedLevelNumber { get; private set; }

@@ -17,7 +17,7 @@ namespace WordConnect
         [SerializeField] private RectTransform animationContainer;
         [SerializeField] private RectTransform coinPrefab;
         [SerializeField] private float animationDuration;
-        [SerializeField] private float delayBetweenCoins;
+        public float delayBetweenCoins;
 
         #endregion
 

@@ -4,9 +4,11 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using BBG;
+using WordConnect;
 
 public class DailyRewardPopup : Popup
 {
+    public DailyRewardController dailyRewardController;
     public TextMeshProUGUI commonText;
     public CanvasGroup mainCoin;
     public RectTransform mainCoinRect;
@@ -18,6 +20,28 @@ public class DailyRewardPopup : Popup
     private Animator animator;
 
     private void Awake()
+    {
+        InitializeVariables();
+    }
+
+    private void OnEnable()
+    {
+        Reset();
+    }
+
+    private void Reset()
+    {
+        for (int i = 0; i < giftItemsComponents.Count; i++)
+        {
+            giftItemsComponents[i].Reset();
+        }
+
+        animator.Rebind();
+        animator.Update(0);
+        commonText.alpha = 1;
+    }
+
+    private void InitializeVariables()
     {
         mainCoinRect = mainCoin.GetComponent<RectTransform>();
         animator = GetComponent<Animator>();
@@ -32,7 +56,9 @@ public class DailyRewardPopup : Popup
 
     public void CollectCoins()
     {
-
+        GameController.Instance.Coins += dailyRewardController.coinsAwarded;
+        dailyRewardController.PlayDailyGiftCoinsAnimation();
+        StartCoroutine(IEHidePopupAfterDelay());
     }
 
     public void PlayRewardAnimation(int itemIndex)
@@ -62,5 +88,12 @@ public class DailyRewardPopup : Popup
     {
         yield return new WaitForSeconds(0.6f);
         animator.Play("Daily Reward", 0, 0);
+    }
+
+    private IEnumerator IEHidePopupAfterDelay()
+    {
+        yield return new WaitForSeconds(CoinController.Instance.delayBetweenCoins * dailyRewardController.coinsAwarded);
+        Hide(true);
+
     }
 }
