@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using BBG;
 
 namespace WordConnect
 {
@@ -48,7 +49,8 @@ namespace WordConnect
             lastInData = inData;
             Debug.Log("last in data changes");
             base.OnShowing(inData);
-
+            SoundManager.Instance.Stop("bkg-music");
+            SoundManager.Instance.Play("success");
             rewardPopup.OnSetup();
             rewardPopup.OpenWindow(0);
             categoryCoinGroup.SetActive(false);
@@ -104,6 +106,7 @@ namespace WordConnect
 
                 animationEnumerator = null;
             }
+            SoundManager.Instance.Play("bkg-music");
 
             Hide(false, new object[] { PlayNextAction });
         }

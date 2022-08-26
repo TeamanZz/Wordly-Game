@@ -207,6 +207,12 @@ namespace WordConnect
         /// </summary>
         private void OnLevelSelected(int index, object data)
         {
+            if (levelListContainer.GetChild(index).GetComponent<LevelItemUI>().lockedIndicator.activeSelf == true)
+            {
+                SoundManager.Instance.Play("word-invalid");
+                return;
+            }
+            SoundManager.Instance.Play("btn-click");
             // Start the level in the GameController
             GameController.Instance.StartLevel(selectedPackInfo, selectedCategoryInfo, index);
 

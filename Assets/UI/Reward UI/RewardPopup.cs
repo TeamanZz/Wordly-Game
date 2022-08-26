@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using WordConnect;
 using UnityEngine.UI;
+using BBG;
 
 public class RewardPopup : MonoBehaviour
 {
@@ -61,6 +62,7 @@ public class RewardPopup : MonoBehaviour
                 break;
 
             case 1:
+                SoundManager.Instance.Play("in-a-row");
                 secondPanel.blocksRaycasts = true;
                 titleText.alpha = 1;
                 StartCoroutine(OpenWindow(secondPanel));

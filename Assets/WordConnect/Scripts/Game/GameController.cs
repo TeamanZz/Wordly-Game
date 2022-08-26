@@ -530,7 +530,7 @@ namespace WordConnect
                 // Else the found word was an extra word so shake the extra word container
                 else
                 {
-                    extraWords.Shake();
+                    // extraWords.Shake();
                 }
 
                 SoundManager.Instance.Play("word-already-found");

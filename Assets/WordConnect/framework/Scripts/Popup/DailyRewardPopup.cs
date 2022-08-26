@@ -79,6 +79,7 @@ public class DailyRewardPopup : Popup
 
     public void PlayRewardAnimation(int itemIndex)
     {
+        SoundManager.Instance.Play("lootbox-select");
         for (int i = 0; i < itemsCanvasGroups.Count; i++)
         {
             itemsCanvasGroups[i].blocksRaycasts = false;
@@ -108,6 +109,8 @@ public class DailyRewardPopup : Popup
     private IEnumerator IEPlayRewardAnimation(int itemIndex)
     {
         yield return new WaitForSeconds(0.6f);
+        SoundManager.Instance.Play("lootbox");
+
         for (int i = 0; i < itemsCanvasGroups.Count; i++)
         {
             if (i != itemIndex)

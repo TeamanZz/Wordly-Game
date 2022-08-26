@@ -10,6 +10,7 @@ public class InARowPopup : Popup
     private void OnEnable()
     {
         ribbonAnimation.PlayRibbonAnimation();
+        SoundManager.Instance.Play("in-a-row");
         StartCoroutine(HideRibonAfterDelay());
     }
 
