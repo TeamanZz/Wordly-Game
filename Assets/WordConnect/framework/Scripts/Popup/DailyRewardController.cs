@@ -23,9 +23,18 @@ public class DailyRewardController : MonoBehaviour
     {
         //Check if the game is opened for the first time then set Reward_Claim_Datetime to the current datetime
         if (string.IsNullOrEmpty(PlayerPrefs.GetString("Reward_Claim_Datetime")))
-            PlayerPrefs.SetString("Reward_Claim_Datetime", DateTime.Now.ToString());
+        {
+            isRewardReady = true;
+            // PlayerPrefs.SetString("Reward_Claim_Datetime", DateTime.Now.ToString());
+        }
 
         StartCoroutine(CheckForRewards());
+    }
+
+    [ContextMenu("Delete Prefs")]
+    public void ResetPrefs()
+    {
+        PlayerPrefs.DeleteKey("Reward_Claim_Datetime");
     }
 
     public void PlayDailyGiftCoinsAnimation()
@@ -51,9 +60,16 @@ public class DailyRewardController : MonoBehaviour
 
                 //get total Hours between this 2 dates
                 double elapsedHours = (currentDatetime - rewardClaimDatetime).TotalHours;
-
+                Debug.Log(elapsedHours + " Elapsed hours");
                 if (elapsedHours >= nextRewardDelay)
+                {
+                    isRewardReady = true;
                     dailyGiftButton.SetActive(true);
+                }
+            }
+            else
+            {
+                dailyGiftButton.SetActive(true);
             }
 
             yield return new WaitForSeconds(checkForRewardDelay);
