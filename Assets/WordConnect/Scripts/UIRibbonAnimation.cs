@@ -8,9 +8,7 @@ public class UIRibbonAnimation : MonoBehaviour
 {
     [SerializeField] private RectTransform ribbonRect;
     [SerializeField] private RectTransform textRect;
-
     [SerializeField] private ParticleSystem particle;
-
     [SerializeField] private Text ribbonText;
     [SerializeField] private List<string> ribbonTitles = new List<string>();
 
@@ -19,6 +17,7 @@ public class UIRibbonAnimation : MonoBehaviour
     {
         if (particle != null)
             particle.Play();
+
         ribbonText.text = ribbonTitles[Random.Range(0, ribbonTitles.Count)];
         ribbonRect.DOSizeDelta(new Vector2(840, 200), 1).SetEase(Ease.OutBack).From(Vector2.zero);
         textRect.DOScale(Vector3.one, 1f).SetEase(Ease.OutBack).From(Vector2.zero);

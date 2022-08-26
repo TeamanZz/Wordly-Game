@@ -12,23 +12,15 @@ namespace WordConnect
         [SerializeField] private RewardPopup rewardPopup;
 
         [SerializeField] private Image backgroundImage = null;
-        //[SerializeField] private Text packNameText = null;
-        //[SerializeField] private Text levelText = null;
-        //[SerializeField] private Text extraWordsText = null;
-        // [SerializeField] private RectTransform extraWordsCoinMarker = null;
         [SerializeField] private Text nextLevelButtonText = null;
         [SerializeField] private Text currentLevelTitleText = null;
-        // [SerializeField] private Text gamePointsText = null;
-        //[SerializeField] private Slider categoryProgressSlider = null;
-        // [SerializeField] private Image categoryProgressBar = null;
-
-        private object[] lastInData;
 
         [Space]
-
         [SerializeField] private GameObject categoryCoinGroup;
         [SerializeField] private RectTransform categoryCoinPrizeIcon = null;
         [SerializeField] private Text categoryCoinsText = null;
+
+        private object[] lastInData;
 
         #endregion
 
@@ -75,39 +67,16 @@ namespace WordConnect
             bool isLastLevel = (bool)inData[10];
 
             backgroundImage.sprite = level.packInfo.background;
-            //packNameText.text = level.packInfo.packName;
-            // levelText.text = string.Format("LEVEL {0} COMPLETED", level.levelData.GameLevelNumber);
-            //gamePointsText.text = currentGamePoints.ToString();
             nextLevelButtonText.text = isLastLevel ? "HOME" : string.Format("PLAY LEVEL {0}", level.levelData.GameLevelNumber + 1);
             currentLevelTitleText.text = isLastLevel ? "HOME" : string.Format("LEVEL {0} COMPLETE", level.levelData.GameLevelNumber);
 
-            //categoryCoinPrizeIcon.gameObject.SetActive(true);
-            //extraWordsCoinMarker.gameObject.SetActive(true);
-
-            // If the level is already complete then don't show the category progress or extra words
-            if (isLevelAlreadyComplete)
+            if (!isLevelAlreadyComplete)
             {
-                //categoryText.gameObject.SetActive(false);
-                //extraWordsText.gameObject.SetActive(false);
-                //categoryProgressSlider.gameObject.SetActive(false);
-            }
-            else
-            {
-                //categoryText.gameObject.SetActive(true);
-                //extraWordsText.gameObject.SetActive(extraWordsCoinsAwarded > 0);
-                //categoryProgressSlider.gameObject.SetActive(true);
-
                 int categoryNumberComplete = level.levelData.CategoryLevelNumber;
                 int totalLevelsInCategory = level.categoryInfo.LevelDatas.Count;
 
-                //categoryText.text = string.Format("{0} {1} / {2}", level.categoryInfo.displayName, categoryNumberComplete, totalLevelsInCategory);
-                // extraWordsText.text = string.Format("+ {0} Extra Words", extraWordsCoinsAwarded);
-
                 float categoryProgressFromValue = Mathf.Lerp(0.095f, 1f, (float)(categoryNumberComplete - 1) / (float)totalLevelsInCategory);
                 float categoryProgressToValue = Mathf.Lerp(0.095f, 1f, (float)(categoryNumberComplete) / (float)totalLevelsInCategory);
-
-                //categoryProgressSlider.value = categoryProgressFromValue;
-                //categoryProgressBar.color = level.packInfo.color;
 
                 animationEnumerator =
                     Animate(
@@ -136,8 +105,6 @@ namespace WordConnect
                 animationEnumerator = null;
             }
 
-            // CoinController.Instance.SetCoinsText(GameController.Instance.Coins);
-
             Hide(false, new object[] { PlayNextAction });
         }
 
@@ -149,8 +116,6 @@ namespace WordConnect
 
                 animationEnumerator = null;
             }
-
-            // CoinController.Instance.SetCoinsText(GameController.Instance.Coins);
 
             Hide(false, new object[] { BackAction });
         }
@@ -188,8 +153,6 @@ namespace WordConnect
                 float t = 1f - (float)(timeEnd - Utilities.SystemTimeInMilliseconds) / duration;
                 int gp = (int)Mathf.Lerp(1, awardedGamePoints, t);
 
-                //gamePointsText.text = (currentGamePoints + gp).ToString();
-
                 if (Utilities.SystemTimeInMilliseconds >= timeEnd)
                 {
                     break;
@@ -206,8 +169,6 @@ namespace WordConnect
                 float t = 1f - (float)(timeEnd - Utilities.SystemTimeInMilliseconds) / duration;
                 float value = Mathf.Lerp(categoryProgressFromValue, categoryProgressToValue, t);
 
-                //categoryProgressSlider.value = value;
-
                 if (Utilities.SystemTimeInMilliseconds >= timeEnd)
                 {
                     break;
@@ -216,33 +177,13 @@ namespace WordConnect
                 yield return null;
             }
 
-            // Animate the coins they get for completing a category
-            // PlayCategoryCoinsAnimation();
-
             yield return new WaitForSeconds(betweenDelay * 2f);
-
-            // Animate the coins they get for finding extra words
-            // if (extraWordsCoinsAwarded > 0)
-            // {
-            //     List<RectTransform> fromPositions = new List<RectTransform>();
-
-            //     for (int i = 0; i < extraWordsCoinsAwarded; i++)
-            //     {
-            //         // fromPositions.Add(extraWordsCoinMarker);
-            //     }
-
-            //     CoinController.Instance.AnimateCoins(extraWordsCoinsAmountFrom, extraWordsCoinsAmountTo, fromPositions);
-
-            //     //extraWordsCoinMarker.gameObject.SetActive(false);
-            // }
-
             animationEnumerator = null;
         }
 
         public void PlayCategoryCoinsAnimation()
         {
             int categoryCoinsAwarded = (int)lastInData[4];
-            Debug.Log(categoryCoinsAwarded + " Coins awarded");
             int categoryCoinsAmountFrom = (int)lastInData[5];
             int categoryCoinsAmountTo = (int)lastInData[6];
 
@@ -254,6 +195,7 @@ namespace WordConnect
                 {
                     fromPositions.Add(categoryCoinPrizeIcon);
                 }
+
                 categoryCoinGroup.SetActive(true);
                 CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
                 categoryCoinsText.text = (categoryCoinsAmountTo - categoryCoinsAmountFrom).ToString() + " COINS";

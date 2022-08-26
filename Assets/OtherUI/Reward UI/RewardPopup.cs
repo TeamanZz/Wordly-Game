@@ -8,20 +8,16 @@ using UnityEngine.UI;
 public class RewardPopup : MonoBehaviour
 {
     [SerializeField] private LevelCompletePopup levelCompletePopup;
-
     [SerializeField] private CanvasGroup firstPanel;
     [SerializeField] private CanvasGroup secondPanel;
-
     [SerializeField] private CanvasGroup lastCanvasGroup;
-    private Coroutine currentCorutine;
-
+    [SerializeField] private CanvasGroup titleText;
+    [SerializeField] private GameObject awardParticlesContainer;
+    [SerializeField] private UIRibbonAnimation uiRibbonAnimation;
     [SerializeField] private float hideTime = 0.5f;
     [SerializeField] private float openTime = 0.5f;
 
-    [SerializeField] private CanvasGroup titleText;
-    [SerializeField] private GameObject awardParticlesContainer;
-
-    [SerializeField] private UIRibbonAnimation uiRibbonAnimation;
+    private Coroutine currentCorutine;
 
     public void OnSetup()
     {
@@ -32,7 +28,6 @@ public class RewardPopup : MonoBehaviour
         secondPanel.blocksRaycasts = false;
     }
 
-    [ContextMenu("Open First")]
     public void OpenFirstPanel()
     {
         OpenWindow(0);
@@ -91,5 +86,4 @@ public class RewardPopup : MonoBehaviour
 
         yield return new WaitForSeconds(openTime);
     }
-
 }

@@ -22,6 +22,11 @@ public class GiftItemUI : MonoBehaviour
 
     void Start()
     {
+        PlayJumpScaleAnimation();
+    }
+
+    private void PlayJumpScaleAnimation()
+    {
         Sequence s = DOTween.Sequence();
         mainSequence = s;
         s.Append(transform.DOScale(1.2f, 0.5f).SetEase(Ease.InOutBack));

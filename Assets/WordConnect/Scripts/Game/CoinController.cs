@@ -87,13 +87,8 @@ namespace WordConnect
             // Aniamte the y position position of the coin
             PlayAnimation(UIAnimation.PositionY(coinToAnimate, animateToPosition.y, animationDuration), startDelay);
 
+            // Animate the scale
             coinToAnimate.DOScale(0.6f, animationDuration).SetDelay(startDelay);
-
-            // // Animate the x scale
-            // PlayAnimation(UIAnimation.ScaleX(coinToAnimate, 0.6f, animationDuration), startDelay);
-
-            // // Animate the y scale
-            // PlayAnimation(UIAnimation.ScaleY(coinToAnimate, 0.6f, animationDuration), startDelay);
 
             // Animate the width
             PlayAnimation(UIAnimation.Width(coinToAnimate, animateTo.sizeDelta.x, animationDuration), startDelay);

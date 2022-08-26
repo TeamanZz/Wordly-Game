@@ -9,14 +9,15 @@ using System;
 public class DailyRewardController : MonoBehaviour
 {
     public int coinsAwarded;
-    [SerializeField] private RectTransform fromRect = null;
-    private bool isRewardReady;
     public GameObject dailyGiftButton;
+
+    [SerializeField] private RectTransform fromRect = null;
+
     [Header("Timing")]
-    //wait 23 Hours to activate the next reward (it's better to use 23h instead of 24h)
     [SerializeField] double nextRewardDelay = 23f;
-    //check if reward is available every 5 seconds
     [SerializeField] float checkForRewardDelay = 5f;
+
+    private bool isRewardReady;
 
     private void Start()
     {
@@ -37,9 +38,6 @@ public class DailyRewardController : MonoBehaviour
         }
 
         CoinController.Instance.AnimateCoins(GameController.Instance.Coins - coinsAwarded, GameController.Instance.Coins, fromPositions);
-        // categoryCoinsText.text = (categoryCoinsAmountTo - categoryCoinsAmountFrom).ToString() + " COINS";
-
-        PlayCoinsGroupJumpAnimation();
     }
 
     private IEnumerator CheckForRewards()
@@ -60,10 +58,5 @@ public class DailyRewardController : MonoBehaviour
 
             yield return new WaitForSeconds(checkForRewardDelay);
         }
-    }
-
-    private void PlayCoinsGroupJumpAnimation()
-    {
-        // categoryCoinsText.transform.DOScale(1, 1f).From(0).SetEase(Ease.OutBack);
     }
 }

@@ -10,15 +10,16 @@ using System;
 
 public class DailyRewardPopup : Popup
 {
-    public DailyRewardController dailyRewardController;
-    public Button colllectButton;
-    public TextMeshProUGUI coinsText;
-    public TextMeshProUGUI commonText;
-    public GameObject coinParticle;
-    public GameObject dailyGiftButton;
-    public CanvasGroup mainCoin;
-    public RectTransform mainCoinRect;
-    public List<GameObject> giftItems = new List<GameObject>();
+    [SerializeField] private DailyRewardController dailyRewardController;
+    [SerializeField] private Button colllectButton;
+    [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private TextMeshProUGUI commonText;
+    [SerializeField] private GameObject coinParticle;
+    [SerializeField] private GameObject dailyGiftButton;
+    [SerializeField] private CanvasGroup mainCoin;
+    [SerializeField] private RectTransform mainCoinRect;
+    [SerializeField] private List<GameObject> giftItems = new List<GameObject>();
+
     private List<RectTransform> itemsRects = new List<RectTransform>();
     private List<CanvasGroup> itemsCanvasGroups = new List<CanvasGroup>();
     private List<GiftItemUI> giftItemsComponents = new List<GiftItemUI>();
@@ -120,6 +121,5 @@ public class DailyRewardPopup : Popup
         yield return new WaitForSeconds(CoinController.Instance.delayBetweenCoins * 10);
         dailyGiftButton.SetActive(false);
         Hide(true);
-        // Reset();
     }
 }

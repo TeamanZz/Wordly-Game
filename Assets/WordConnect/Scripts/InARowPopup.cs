@@ -6,6 +6,7 @@ using UnityEngine;
 public class InARowPopup : Popup
 {
     public UIRibbonAnimation ribbonAnimation;
+
     private void OnEnable()
     {
         ribbonAnimation.PlayRibbonAnimation();
