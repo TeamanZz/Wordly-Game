@@ -41,9 +41,9 @@ namespace WordConnect
         /// <summary>
         /// Increments the Coins by the give amount
         /// </summary>
-        public void SetCoinsText(int coins)
+        public void SetCoinsText()
         {
-            coinsText.text = coins.ToString();
+            coinsText.text = GameController.Instance.Coins.ToString();
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace WordConnect
             // Animate the height
             PlayAnimation(UIAnimation.Height(coinToAnimate, animateTo.sizeDelta.y, animationDuration), startDelay);
 
-            StartCoroutine(WaitThenSetCoinsText(setCoinAmountTextTo, animationDuration + startDelay));
+            StartCoroutine(WaitThenSetCoinsText(animationDuration + startDelay));
         }
 
         /// <summary>
@@ -121,12 +121,12 @@ namespace WordConnect
             anim.Play();
         }
 
-        private IEnumerator WaitThenSetCoinsText(int coinAmount, float waitTime)
+        private IEnumerator WaitThenSetCoinsText(float waitTime)
         {
             yield return new WaitForSeconds(waitTime);
             animateTo.transform.DOScale(1.15f, 0.2f).SetEase(Ease.OutBack).From(1).SetLoops(2, LoopType.Yoyo);
 
-            SetCoinsText(coinAmount);
+            SetCoinsText();
         }
 
         #endregion

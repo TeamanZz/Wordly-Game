@@ -119,7 +119,7 @@ namespace WordConnect
                 LastCompletedLevelNumber = 0;
             }
 
-            CoinController.Instance.SetCoinsText(Coins);
+            CoinController.Instance.SetCoinsText();
 
             // Loads the word file to be used to check for extra words
             LoadWordFile();
@@ -248,7 +248,7 @@ namespace WordConnect
             {
                 Coins -= CoinCostPerHint;
 
-                CoinController.Instance.SetCoinsText(Coins);
+                CoinController.Instance.SetCoinsText();
 
                 ShowHint(CurrentActiveLevel);
 
@@ -274,7 +274,7 @@ namespace WordConnect
             {
                 Coins -= CoinCostPerMultiHint;
 
-                CoinController.Instance.SetCoinsText(Coins);
+                CoinController.Instance.SetCoinsText();
 
                 ShowMultiHint(CurrentActiveLevel, numToShowForMultiHint);
 
@@ -361,7 +361,6 @@ namespace WordConnect
             {
                 coins *= coinsMultiplier;
             }
-
             Coins += coins;
         }
 
@@ -372,7 +371,7 @@ namespace WordConnect
         {
             Coins += coins;
 
-            CoinController.Instance.SetCoinsText(Coins);
+            CoinController.Instance.SetCoinsText();
         }
 
         public bool IsLevelLocked(LevelData levelData)
@@ -1320,7 +1319,7 @@ namespace WordConnect
             // Deduct the cost for using a target hint now
             Coins -= CoinCostPerTargetHint;
 
-            CoinController.Instance.SetCoinsText(Coins);
+            CoinController.Instance.SetCoinsText();
 
             EndPlayerSelectingHint();
 

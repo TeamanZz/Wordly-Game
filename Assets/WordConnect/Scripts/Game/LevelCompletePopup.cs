@@ -54,6 +54,7 @@ namespace WordConnect
         public override void OnShowing(object[] inData)
         {
             lastInData = inData;
+            Debug.Log("last in data changes");
             base.OnShowing(inData);
 
             rewardPopup.OnSetup();
@@ -135,7 +136,7 @@ namespace WordConnect
                 animationEnumerator = null;
             }
 
-            CoinController.Instance.SetCoinsText(GameController.Instance.Coins);
+            // CoinController.Instance.SetCoinsText(GameController.Instance.Coins);
 
             Hide(false, new object[] { PlayNextAction });
         }
@@ -149,7 +150,7 @@ namespace WordConnect
                 animationEnumerator = null;
             }
 
-            CoinController.Instance.SetCoinsText(GameController.Instance.Coins);
+            // CoinController.Instance.SetCoinsText(GameController.Instance.Coins);
 
             Hide(false, new object[] { BackAction });
         }
@@ -241,6 +242,7 @@ namespace WordConnect
         public void PlayCategoryCoinsAnimation()
         {
             int categoryCoinsAwarded = (int)lastInData[4];
+            Debug.Log(categoryCoinsAwarded + " Coins awarded");
             int categoryCoinsAmountFrom = (int)lastInData[5];
             int categoryCoinsAmountTo = (int)lastInData[6];
 
@@ -248,12 +250,11 @@ namespace WordConnect
             {
                 List<RectTransform> fromPositions = new List<RectTransform>();
 
-                for (int i = 0; i < categoryCoinsAwarded; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     fromPositions.Add(categoryCoinPrizeIcon);
                 }
                 categoryCoinGroup.SetActive(true);
-                GameController.Instance.Coins += categoryCoinsAwarded;
                 CoinController.Instance.AnimateCoins(categoryCoinsAmountFrom, categoryCoinsAmountTo, fromPositions);
                 categoryCoinsText.text = (categoryCoinsAmountTo - categoryCoinsAmountFrom).ToString() + " COINS";
 
