@@ -109,7 +109,7 @@ public class DailyRewardPopup : Popup
     private IEnumerator IEPlayRewardAnimation(int itemIndex)
     {
         yield return new WaitForSeconds(0.6f);
-        SoundManager.Instance.Play("lootbox");
+        // SoundManager.Instance.Play("lootbox");
 
         for (int i = 0; i < itemsCanvasGroups.Count; i++)
         {

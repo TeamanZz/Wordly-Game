@@ -209,7 +209,7 @@ namespace WordConnect
         {
             if (levelListContainer.GetChild(index).GetComponent<LevelItemUI>().lockedIndicator.activeSelf == true)
             {
-                SoundManager.Instance.Play("word-invalid");
+                SoundManager.Instance.Play("locked");
                 return;
             }
             SoundManager.Instance.Play("btn-click");
