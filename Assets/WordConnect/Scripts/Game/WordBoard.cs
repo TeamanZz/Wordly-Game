@@ -135,12 +135,19 @@ namespace WordConnect
                 SetWordBoardState(wordBoardCell, WordBoardCell.State.Found, animate, (float)i * delayBetweenCells);
             }
 
+            CheckOnLastWordPulsating();
+
             // Check if there are coins to award
             if (coinsToAward.Count > 0)
             {
                 AwardCoins(coinsToAward);
             }
 
+        }
+
+        private void CheckOnLastWordPulsating()
+        {
+            Debug.Log(GameController.Instance.CurrentActiveLevel.levelData.Words.Count + "Count");
         }
 
         /// <summary>
