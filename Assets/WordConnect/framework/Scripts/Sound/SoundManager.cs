@@ -179,6 +179,17 @@ namespace BBG
             StopAllSounds(id, loopingAudioSources);
         }
 
+        public void ChangeBackgroundMusicVolume(string id, float newValue)
+        {
+            SetNewSoundVolume(id, loopingAudioSources, newValue);
+        }
+
+
+        public void ChangeBackgroundMusicVolumeToDefault(string id)
+        {
+            SetDefaultSoundVolume(id, loopingAudioSources);
+        }
+
         /// <summary>
         /// Stops all playing sounds with the given type
         /// </summary>
@@ -264,6 +275,36 @@ namespace BBG
                     Destroy(playingSound.audioSource.gameObject);
                     playingSounds.RemoveAt(i);
                     i--;
+                }
+            }
+        }
+
+        private void SetNewSoundVolume(string id, List<PlayingSound> playingSounds, float newValue)
+        {
+            for (int i = 0; i < playingSounds.Count; i++)
+            {
+                PlayingSound playingSound = playingSounds[i];
+
+                if (id == playingSound.soundInfo.id)
+                {
+                    playingSound.audioSource.volume = newValue;
+
+                    break;
+                }
+            }
+        }
+
+        private void SetDefaultSoundVolume(string id, List<PlayingSound> playingSounds)
+        {
+            for (int i = 0; i < playingSounds.Count; i++)
+            {
+                PlayingSound playingSound = playingSounds[i];
+
+                if (id == playingSound.soundInfo.id)
+                {
+                    playingSound.audioSource.volume = GetSoundInfo(id).clipVolume;
+
+                    break;
                 }
             }
         }

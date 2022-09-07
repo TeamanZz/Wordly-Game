@@ -49,7 +49,8 @@ namespace WordConnect
             lastInData = inData;
             Debug.Log("last in data changes");
             base.OnShowing(inData);
-            SoundManager.Instance.Stop("bkg-music");
+            // SoundManager.Instance.Stop("bkg-music");
+            SoundManager.Instance.ChangeBackgroundMusicVolume("bkg-music", 0.1f);
             SoundManager.Instance.Play("success");
             rewardPopup.OnSetup();
             rewardPopup.OpenWindow(0);
@@ -107,6 +108,7 @@ namespace WordConnect
                 animationEnumerator = null;
             }
             SoundManager.Instance.Play("bkg-music");
+            SoundManager.Instance.ChangeBackgroundMusicVolumeToDefault("bkg-music");
 
             Hide(false, new object[] { PlayNextAction });
         }
