@@ -107,7 +107,7 @@ namespace WordConnect
 
                 animationEnumerator = null;
             }
-            SoundManager.Instance.Play("bkg-music");
+            // SoundManager.Instance.Play("bkg-music");
             SoundManager.Instance.ChangeBackgroundMusicVolumeToDefault("bkg-music");
 
             Hide(false, new object[] { PlayNextAction });
