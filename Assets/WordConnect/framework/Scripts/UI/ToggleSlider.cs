@@ -40,7 +40,7 @@ namespace BBG
 
         #region Properties
 
-        public bool IsOn { get; set; }
+        public bool IsOn;
 
         public System.Action<bool> OnValueChanged { get; set; }
 
@@ -52,9 +52,9 @@ namespace BBG
         {
             canvasCamera = Utilities.GetCanvasCamera(transform);
 
-            SetToggle(defaultIsOn, false);
+            // SetToggle(defaultIsOn, false);
 
-            SetUI(IsOn ? 1f : 0f);
+            // SetUI(IsOn ? 1f : 0f);
         }
 
         private void Update()

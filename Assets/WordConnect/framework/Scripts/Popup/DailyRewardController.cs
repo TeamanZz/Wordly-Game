@@ -17,7 +17,7 @@ public class DailyRewardController : MonoBehaviour
     [SerializeField] double nextRewardDelay = 23f;
     [SerializeField] float checkForRewardDelay = 5f;
 
-    private bool isRewardReady;
+    public bool isRewardReady;
 
     private void Start()
     {
@@ -60,7 +60,6 @@ public class DailyRewardController : MonoBehaviour
 
                 //get total Hours between this 2 dates
                 double elapsedHours = (currentDatetime - rewardClaimDatetime).TotalHours;
-                Debug.Log(elapsedHours + " Elapsed hours");
                 if (elapsedHours >= nextRewardDelay)
                 {
                     isRewardReady = true;

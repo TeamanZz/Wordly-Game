@@ -123,6 +123,7 @@ public class DailyRewardPopup : Popup
     {
         yield return new WaitForSeconds(CoinController.Instance.delayBetweenCoins * 10);
         dailyGiftButton.SetActive(false);
+        dailyRewardController.isRewardReady = false;
         Hide(true);
     }
 }
