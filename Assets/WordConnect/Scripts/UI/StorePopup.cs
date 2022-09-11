@@ -11,43 +11,43 @@ using UnityEngine.Purchasing.Extension;
 
 namespace WordConnect
 {
-	public class StorePopup : Popup
-	{
-		#region Member Variables
+    public class StorePopup : Popup
+    {
+        #region Member Variables
 
-		private bool areAdsRemoved;
+        private bool areAdsRemoved;
 
-		#endregion
+        #endregion
 
-		#region Public Methods
+        #region Public Methods
 
-		public override void OnShowing(object[] inData)
-		{
-			#if BBG_MT_IAP
+        public override void OnShowing(object[] inData)
+        {
+#if BBG_MT_IAP
 			BBG.MobileTools.IAPManager.Instance.OnProductPurchased += OnProductPurchases;
-			#endif
-		}
+#endif
+        }
 
-		public override void OnHiding()
-		{
-			base.OnHiding();
+        public override void OnHiding()
+        {
+            base.OnHiding();
 
-			#if BBG_MT_IAP
+#if BBG_MT_IAP
 			BBG.MobileTools.IAPManager.Instance.OnProductPurchased -= OnProductPurchases;
-			#endif
-		}
+#endif
+        }
 
-		#endregion
+        #endregion
 
-		#region Private Methods
+        #region Private Methods
 
-		private void OnProductPurchases(string productId)
-		{
-			Hide(false);
+        private void OnProductPurchases(string productId)
+        {
+            Hide(false);
 
-			PopupManager.Instance.Show("product_purchased");
-		}
+            PopupManager.Instance.Show("product_purchased");
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

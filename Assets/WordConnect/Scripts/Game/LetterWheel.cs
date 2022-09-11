@@ -132,7 +132,7 @@ namespace WordConnect
 
         public void Scramble()
         {
-            Scramble(true);
+            Scramble(true, false);
         }
 
         #endregion
@@ -186,7 +186,7 @@ namespace WordConnect
                 letterUIs.Add(letterUI);
             }
 
-            Scramble(false);
+            Scramble(false, true);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace WordConnect
             UpdateLine();
         }
 
-        private void Scramble(bool animate)
+        private void Scramble(bool animate, bool isStartScramble)
         {
             // Don't scramble the letters if the letters are being selected or they are already animating
             if (state != State.Idle || isAnimatingLetters)
@@ -354,8 +354,7 @@ namespace WordConnect
             }
 
             List<Vector2> letterPositions = new List<Vector2>();
-
-            if (GameController.Instance.currentLevelIndex != 0)
+            if (GameController.Instance.CurrentActiveLevel.levelData.GameLevelNumber != 0 && isStartScramble == false)
             {
                 letterPositions = PickRandomPositionsForLetters();
             }

@@ -169,6 +169,8 @@ namespace WordConnect
                         continue;
                     }
                     int levelIndex = gameLevelNumber - categoryInfo.LevelDatas[0].GameLevelNumber;
+                    currentLevelIndex = gameLevelNumber;
+                    Debug.Log("sas" + currentLevelIndex);
                     StartLevel(packInfo, categoryInfo, categoryInfo.LevelDatas[levelIndex], levelIndex);
 
                     return;
@@ -183,7 +185,12 @@ namespace WordConnect
         {
             if (levelIndex < categoryInfo.LevelDatas.Count)
             {
+                // Debug.Log("as1 " + GameController.Instance.CurrentActiveLevel.levelData.GameLevelNumber);
+
+
+
                 StartLevel(packInfo, categoryInfo, categoryInfo.LevelDatas[levelIndex], levelIndex);
+
             }
         }
 
@@ -192,7 +199,6 @@ namespace WordConnect
         /// </summary>
         public void StartLevel(PackInfo packInfo, CategoryInfo categoryInfo, LevelData levelData, int levelIndex)
         {
-            currentLevelIndex = levelIndex;
             ActiveLevel activeLevel = new ActiveLevel();
 
             activeLevel.packInfo = packInfo;
